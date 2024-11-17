@@ -1,0 +1,20 @@
+body {
+
+}
+
+h1 {
+    color: #6261E2;
+}
+
+p{
+    color: gray;
+}
+
+.center_text{
+    text-align: center;
+}
+
+.cars_with_background{
+    background-color: ebecff;
+    color: black;
+}

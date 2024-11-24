@@ -1,5 +1,5 @@
 body {
-
+    font-family: 'Gill Sans', sans-serif;
 }
 
 h1 {
@@ -15,6 +15,17 @@ p{
 }
 
 .cars_with_background{
-    background-color: ebecff;
+    background-color: #ebecff;
     color: black;
+    width: 200px;
+    height: auto;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
 }

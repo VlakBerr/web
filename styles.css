@@ -28,4 +28,30 @@ p{
 .cards{
     display: flex;
     justify-content: center;
+    
+}
+
+.smart-search-block{
+    display: flex;
+    flex-direction: column;
+}
+
+.smart-search-text{
+    display: flex;
+    justify-content: center;
+}
+
+.search-button-block{
+    display: flex;
+    justify-content: center;
+}
+
+.search-button{
+    border-color: yellow black;
+    border-radius: 14px;
+    padding: 10px;
+}
+
+.search-button:hover{
+    background-color: beige;
 }

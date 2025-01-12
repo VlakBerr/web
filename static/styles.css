@@ -142,7 +142,7 @@ p{
 
 
 .body{
-    width: 100%;
+    width: 80%;
 }
 
 .news{
@@ -157,13 +157,17 @@ p{
     color: black;
     width: 100%;
     height: auto;
+    min-height: 300px;
+    
     padding: 50px;
     margin: 10px;
     border-radius: 15px;
     font-size: 14px;
     border: none;
     cursor: pointer;
-    white-space: break-spaces;
     text-align: center;
     vertical-align: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -18,5 +18,10 @@ def find_max():
     if a > b: return f'{a}'
     else: return f'{b}'
 
+@app.route("/sonic")
+def sonic_article():
+    return render_template('sonic_article.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,9 +1,14 @@
-h1{
+
+h1 {
     color: black;
+    font-size: 50px;
+    margin-top: 16px;
+    margin-bottom: 40px;
 }
 
 p{
-    color: black
+    color: black;
+    margin-bottom: 10px;
 }
 
 #main{
@@ -46,5 +51,5 @@ p{
 .article_btns{
     display: flex;
     flex-direction: row ;
-    
+    margin-bottom: 40px;
 }

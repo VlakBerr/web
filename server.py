@@ -20,12 +20,12 @@ def find_max():
 
 @app.route("/sonic")
 def sonic_article():
-    return render_template('sonic_article.html')
+    return render_template('article.html')
 
 
 @app.route("/base")
 def base():
-    return render_template('base.html', title = 'dfnsjdfnjsdfnjsdfn')
+    return render_template('base.html', title = 'Китайский новый год')
 
 if __name__ == '__main__':
     app.run(debug=True)

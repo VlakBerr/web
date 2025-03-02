@@ -40,6 +40,29 @@ def sonic_article():
                             article_image_path=article_image_path)
 
 
+@app.route('/Ехидна_Наклз')
+def nacles_article():
+    title_article='Ехидна Наклз'
+    text_article='''Ехидна Наклз[2] (яп. ナックルズ・ザ・エキドゥナ Наккурудзу дза Экидуна, англ. Knuckles the Echidna) 
+    — персонаж видеоигр, телешоу и комиксов серии Sonic the Hedgehog. Его прозвища — «Knuckie», «Rad Red», «Red Storm», 
+    «Knux», и «Knucklehead». Создан Такаси Юдой. Первое появление — игра Sonic the Hedgehog 3. Наклз — красная 
+    антропоморфная ехидна, чьи иглы похожи на причёску из многочисленных коротких дредов. Можно заметить некоторое 
+    различие между игровым и неигровым спрайтами Наклза. В играх играбельный Наклз предстаёт в ярко-красном цвете с 
+    зелёными носками, а неиграбельный — как красно-розовый с жёлтыми носками. По официальным данным Наклзу 16 лет.'''
+    article_image_title='Ехидна Наклз'
+    article_image_path='static/images/Nackles.png'
+    return render_template('article.html',
+                            title_article=title_article,
+                            text_article=text_article, 
+                            article_image_title=article_image_title, 
+                            article_image_path=article_image_path)
+
+
+
+
+
+
+
 @app.route("/base")
 def base():
     return render_template('base.html', title = 'Китайский новый год')

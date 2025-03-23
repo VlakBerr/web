@@ -1,22 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 
 
 app = Flask(__name__)
 
 @app.route("/")
-def ruwiki():
+@app.route("/index")
+def index():
     return render_template("ruwiki.html")
-
-@app.route("/hello")
-def hello():
-    return 'привет мир'
-
-@app.route("/max")
-def find_max():
-    a = int(request.args['a'])
-    b = int(request.args['b'])
-    if a > b: return f'{a}'
-    else: return f'{b}'
 
 
 database = {
@@ -72,9 +62,13 @@ def article(name):
 
 
 
-@app.route("/base")
-def base():
-    return render_template('base.html', title = 'Китайский новый год')
+
+@app.route('/add_article', methods=['GET', 'POST'])
+def add_article():
+    if request.method=='GET':
+        return render_template('add_article.html')
+    else:
+        return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

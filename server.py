@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
+from article import Article
+import os
+from database import Database
 
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER']='uploads/'
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route("/")
 @app.route("/index")
@@ -67,8 +72,33 @@ def article(name):
 def add_article():
     if request.method=='GET':
         return render_template('add_article.html')
-    else:
-        return redirect(url_for('index'))
+
+
+    # POST запрос
+    title = request.form.get('title')
+    if title is None:
+        flash('для статьи необходимо название')
+        redirect(request.url)
+        return
+        
+    content = request.form.get('content')
+    if content is None:
+        flash('для статьи необходим текст')
+        redirect(request.url)
+        return
+
+    photo = request.files.get('photo')
+    if photo is None or photo.filename is None:
+        flash('для статьи необзодимо фото')
+        redirect(request.url)
+        return
+    photo.save(app.config['UPLOAD_FOLDER'] + photo.filename)
+
+    article=Article(title, content, photo.filename)
+    print(article)
+    Database.save(article=article)
+
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)

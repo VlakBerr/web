@@ -58,7 +58,12 @@ p{
 }
 
 
+.article_text{
+    width: 60%;
+}
+
 .article_image{
+    width: 40%;
     padding-left: 40px;
     padding-right: 40px;
     display: flex;
@@ -69,4 +74,9 @@ p{
 
 .article_image_name{
     margin: 20px;
+}
+
+.article_image img{
+    max-width: 350px;
+    height: auto;
 }

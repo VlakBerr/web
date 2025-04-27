@@ -5,14 +5,13 @@ from article import Article
 
 
 class Database:
-    articles = []
     DB='database.db'
     SCHEMA='schema.sql'
 
     @staticmethod
     def execute(sql, params=()):
         'подключаемся к бд'
-        connection=sqlite3.connect(Database.SCHEMA)
+        connection=sqlite3.connect(Database.DB)
 
         'получаем курсор'
         cursor = connection.cursor()
@@ -36,7 +35,7 @@ class Database:
            return False
        
        Database.execute(
-            'INSERT INTO articles VALUES (?,?,?)',
+            'INSERT INTO articles (title, content, photo) VALUES (?,?,?)',
             [article.title, article.content ,article.photo]
         )
        return True
@@ -46,7 +45,7 @@ class Database:
     @staticmethod
     def find_article_by_title(title):
         'подключаемся к бд'
-        connection=sqlite3.connect(Database.SCHEMA)
+        connection=sqlite3.connect(Database.DB)
 
         'получаем курсор'
         cursor = connection.cursor()
@@ -58,12 +57,27 @@ class Database:
         if len(articles) == 0:
             return None
         
-        article = Article(articles[0][0], articles[0][1], articles[0][2], articles[0][3])
-
-        return articles[0]
+        id, title, content, photo = articles[0]
+        article = Article(title, content, photo, id)
+        return article
     
 
     @staticmethod
     def get_all_articles():
-        return Database.articles
+        'подключаемся к бд'
+        connection=sqlite3.connect(Database.DB)
+
+        'получаем курсор'
+        cursor = connection.cursor()
+
+        'код'
+        cursor.execute('SELECT * FROM articles')
+        raw_articles=cursor.fetchall()
+
+        articles=[]
+        for id, title, content, photo in raw_articles:
+            article = Article(title, content, photo, id)
+            articles.append(article)
+
+        return articles
     

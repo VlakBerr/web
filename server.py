@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory, abort
 from article import Article
 import os
 from database import Database
@@ -41,6 +41,13 @@ def uploaded_photo(filename):
     )
 
 
+@app.route("/delete_article/<int:id>", methods=['POST'])
+def delete_article(id):
+    deleted = Database.delete_article_by_id(id)
+    if not deleted:
+        abort(404, f'Article with id "{id}" does not exist')
+
+    return redirect(url_for('index'))
 
 
 @app.route('/add_article', methods=['GET', 'POST'])

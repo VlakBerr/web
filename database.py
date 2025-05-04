@@ -19,10 +19,28 @@ class Database:
         'код'
         cursor.execute(sql, params)
         
-
         'фиксируем изменения'
         connection.commit()
 
+    @staticmethod
+    def select(sql, params=()):
+        'подключаемся к бд'
+        connection=sqlite3.connect(Database.DB)
+
+        'получаем курсор'
+        cursor = connection.cursor()
+
+        'выполняем запрос'
+        cursor.execute(sql, params)
+        
+        raw_articles=cursor.fetchall()
+        articles=[]
+        for id, title, content, photo in raw_articles:
+            article = Article(title, content, photo, id)
+            articles.append(article)
+
+        return articles
+    
 
     def create_table():
         with open(Database.SCHEMA) as schema_file:
@@ -41,6 +59,23 @@ class Database:
        return True
 
 
+    @staticmethod
+    def find_article_by_id(id):
+        articles = Database.select('SELECT * FROM articles WHERE id = ?', [id])
+
+        if not articles:
+            return None
+        return articles[0]
+    
+
+    @staticmethod
+    def delete_article_by_id(id):
+        article=Database.find_article_by_id(id)
+        if article is None:
+            return False
+        
+        Database.execute('DELETE FROM articles WHERE id = ?', [id])
+        return True
 
     @staticmethod
     def find_article_by_title(title):

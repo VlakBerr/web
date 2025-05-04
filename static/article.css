@@ -17,6 +17,34 @@ p{
     justify-content: center;
 }
 
+.controls_wrapper{
+    display: flex;
+    justify-content: start;
+    width: 1000px;
+    
+}
+
+.controls{
+    display: flex;
+}
+
+.controls_btn{
+    color: #5e2ec8;
+    border: none;
+    border-radius: 15px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 8px;
+
+}
+
+.controls_btn:hover{
+    color: white;
+    background-color: #5e2ec8;
+    transition: background-color 0.5s ease-in-out;
+}
+
 .article {
     background-color: white;
     padding: 20px;

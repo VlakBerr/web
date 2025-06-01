@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory, abort, session
 from article import Article
 import os
 from database import Database
 
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "guzinibambini"
 app.config['UPLOAD_FOLDER']='uploads/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
@@ -123,6 +124,63 @@ def show_articles():
         groups.append(articles[i : i+k])
 
     return render_template('articles.html', groups=groups)
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        return render_template("register.html")
+    
+    # POST-запрос далее
+    user_email = request.form.get("user_email")
+    user_phone = request.form.get("user_phone")
+    user_password = request.form.get("user_password")
+    user_password_repeat = request.form.get("user_password_repeat")
+
+    if not user_email:
+        flash("Электронная почта не может быть пустой!")
+        return redirect(request.url)
+    if not user_phone:
+        flash("Номер телефона не может быть пустым!")
+        return redirect(request.url)
+    if not user_password:
+        flash("Пароль не может быть пустым!")
+        return redirect(request.url)
+    if not user_password_repeat or user_password != user_password_repeat:
+        flash("Пароли не совпадают!")
+        return redirect(request.url)
+    
+    Database.register_user(user_email, user_phone, user_password)
+
+    return redirect(url_for("login"))
+
+    
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    
+    # POST-запрос далее
+    user_login = request.form.get("user_login")
+    user_password = request.form.get("user_password")
+
+    if not user_login:
+        flash("Логин не может быть пустым!")
+        return redirect(request.url)
+    if not user_password:
+        flash("Пароль не может быть пустым!")
+        return redirect(request.url)
+
+    if not Database.can_be_logged_in(user_login, user_password):
+        flash('Такого пользователя не существует или неверный пароль!')
+        return redirect(request.url)
+    
+    user = Database.find_user_by_email_or_phone(user_login)
+    session['user_id'] = user.id
+    
+    return redirect(url_for("index"))
+
 
 
 if __name__ == '__main__':
